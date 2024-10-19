@@ -1,0 +1,38 @@
+<!-- templates/user_dashboard.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard">
+    <h2>My Requests</h2>
+    <a href="{{ url_for('main.new_request') }}" class="button">New Request</a>
+    
+    <div class="requests-list">
+        {% for request in requests %}
+        <div class="request-card">
+            <h3>{{ request.problem_type }} Issue</h3>
+            <p>Location: {{ request.location_type }} {{ request.location_number }}</p>
+            <p>Status: {{ request.status }}</p>
+            <p>{{ request.description }}</p
+            <!-- templates/user_dashboard.html (continued) -->
+            {% if request.image_path %}
+            <img src="{{ url_for('static', filename='uploads/' + request.image_path) }}" alt="Issue Image" class="request-image">
+            {% endif %}
+            
+            <div class="messages">
+                <h4>Messages</h4>
+                {% for message in request.messages %}
+                <div class="message {% if message.sender_id == current_user.id %}sent{% else %}received{% endif %}">
+                    <p>{{ message.content }}</p>
+                    <small>{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                </div>
+                {% endfor %}
+                
+                <form method="POST" action="{{ url_for('main.add_message', request_id=request.id) }}" class="message-form">
+                    <input type="text" name="content" placeholder="Type your message..." required>
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
