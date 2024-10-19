@@ -1,0 +1,24 @@
+technical_college_helpdesk/
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── admin.js
+│   ├── uploads/
+│   └── images/
+│       └── logo.png
+├── templates/
+│   ├── base.html
+│   ├── home.html
+│   ├── login.html
+│   ├── signup.html
+│   ├── user_dashboard.html
+│   ├── add_request.html
+│   └── admin_dashboard.html
+├── config.py
+├── models.py
+├── forms.py
+├── routes.py
+├── database.py
+├── app.py
+└── requirements.txt
