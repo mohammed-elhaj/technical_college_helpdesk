@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Technical College Helpdesk</title>
+    <title>نموذج طلب دعم فني تقني</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="College Logo" class="logo">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="College Logo" class="logo">
         <nav>
             {% if current_user.is_authenticated %}
-                <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
-                <a href="{{ url_for('main.logout') }}">Logout</a>
+                <a href="{{ url_for('main.dashboard') }}">لوحة التحكم</a>:
+                <a href="{{ url_for('main.logout') }}">تسجيل خروج</a>
             {% else %}
-                <a href="{{ url_for('main.login') }}">Login</a>
-                <a href="{{ url_for('main.signup') }}">Sign Up</a>
+                <a href="{{ url_for('main.login') }}">تسجيل الدخول</a>
+                <a href="{{ url_for('main.signup') }}">تسجيل</a>
             {% endif %}
         </nav>
     </header>

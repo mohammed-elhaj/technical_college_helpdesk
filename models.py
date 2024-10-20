@@ -21,7 +21,7 @@ class Request(db.Model):
     problem_type = db.Column(db.String(20), nullable=False)
     description = db.Column(db.Text, nullable=False)
     image_path = db.Column(db.String(200))
-    status = db.Column(db.String(20), default='pending')
+    status = db.Column(db.String(20), default='قيد المعالجة')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     messages = db.relationship('Message', backref='request', lazy=True)
 
