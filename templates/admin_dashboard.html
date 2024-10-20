@@ -2,22 +2,22 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="dashboard admin-dashboard">
-    <h2>All Support Requests</h2>
+    <h2>طلبات الدعم الفني</h2>
     
     <div id="stats-graph"></div>
     
     <div class="requests-list">
         {% for request in requests %}
-        <div class="request-card {% if request.status == 'solved' %}solved{% endif %}">
+        <div class="request-card {% if request.status == 'تمت المعالجة' %}solved{% endif %}">
             <div class="request-header">
-                <h3>{{ request.problem_type }} Issue</h3>
+                <h3>{{ request.problem_type }} مشكلة</h3>
                 <span class="status">{{ request.status }}</span>
             </div>
             
             <div class="request-details">
-                <p>Submitted by: {{ request.user.full_name }}</p>
-                <p>Location: {{ request.location_type }} {{ request.location_number }}</p>
-                <p>Date: {{ request.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                <p>مقدم الطلب: {{ request.user.full_name }}</p>
+                <p>الموقع: {{ request.location_type }} {{ request.location_number }}</p>
+                <p>التاريخ: {{ request.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
                 <p>{{ request.description }}</p>
                 
                 {% if request.image_path %}
@@ -25,14 +25,14 @@
                 {% endif %}
             </div>
             
-            {% if request.status != 'solved' %}
+            {% if request.status != 'تمت المعالجة' %}
             <form method="POST" action="{{ url_for('main.solve_request', request_id=request.id) }}" class="solve-form">
-                <button type="submit">Mark as Solved</button>
+                <button type="submit">تمت المعالجة</button>
             </form>
             {% endif %}
             
             <div class="messages">
-                <h4>Messages</h4>
+                <h4>الرسائل</h4>
                 {% for message in request.messages %}
                 <div class="message {% if message.sender_id == current_user.id %}sent{% else %}received{% endif %}">
                     <p>{{ message.content }}</p>
@@ -41,8 +41,8 @@
                 {% endfor %}
                 
                 <form method="POST" action="{{ url_for('main.add_message', request_id=request.id) }}" class="message-form">
-                    <input type="text" name="content" placeholder="Type your message..." required>
-                    <button type="submit">Send</button>
+                    <input type="text" name="content" placeholder="اكتب رسالتك..." required>
+                    <button type="submit">ارسال</button>
                 </form>
             </div>
         </div>

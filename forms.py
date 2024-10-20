@@ -3,22 +3,22 @@ from wtforms import StringField, PasswordField, RadioField, TextAreaField, FileF
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 class SignupForm(FlaskForm):
-    full_name = StringField('Full Name', validators=[DataRequired(), Length(min=2, max=100)])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    full_name = StringField('الاسم بالكامل', validators=[DataRequired(), Length(min=2, max=100)])
+    email = StringField('البريد الالكتروني', validators=[DataRequired(), Email()])
+    password = PasswordField('كلمة المرور', validators=[DataRequired(), Length(min=6, max=20)])
+    confirm_password = PasswordField('تاكيد كلمة المرور', validators=[DataRequired(), EqualTo('password')])
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    email = StringField('البريد الالكتروني', validators=[DataRequired(), Email()])
+    password = PasswordField('كلمة المرور', validators=[DataRequired()])
 
 class RequestForm(FlaskForm):
-    location_type = RadioField('Location Type', 
-                             choices=[('office', 'Office'), ('lab', 'Lab'), ('hall', 'Hall')],
+    location_type = RadioField('حدد مكان المشكلة:', 
+                             choices=[('مكتب', 'مكتب'), ('معمل', 'معمل'), ('قاعة', 'قاعة')],
                              validators=[DataRequired()])
-    location_number = StringField('Location Number', validators=[DataRequired()])
-    problem_type = SelectField('Problem Type',
-                             choices=[('computer', 'Computer'), ('projector', 'Projector'), ('printer', 'Printer')],
+    location_number = StringField('رقم القاعة او المكتب او المعمل:', validators=[DataRequired()])
+    problem_type = SelectField('نوع المشكلة',
+                             choices=[('جهاز مكتبي', 'جهاز مكتبي'), ('جهاز عرض', 'جهاز عرض'), ('طابعة', 'طابعة')],
                              validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[DataRequired()])
-    image = FileField('Image (Optional)')
+    description = TextAreaField('وصف المشكلة:', validators=[DataRequired()])
+    image = FileField('اضافة صورة (اختياري)')  

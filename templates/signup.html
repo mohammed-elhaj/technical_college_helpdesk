@@ -2,7 +2,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="form-container">
-    <h2>Sign Up</h2>
+    <h2>تسجيل جديد</h2>
     <form method="POST">
         {{ form.hidden_tag() }}
         <div class="form-group">
@@ -21,7 +21,7 @@
             {{ form.confirm_password.label }}
             {{ form.confirm_password }}
         </div>
-        <button type="submit">Sign Up</button>
+        <button type="submit">تسجيل</button>
     </form>
 </div>
-{% endblock %
+{% endblock %}

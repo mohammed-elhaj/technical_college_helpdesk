@@ -1,5 +1,5 @@
 # File: routes.py
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, current_app, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -65,7 +65,15 @@ def logout():
 def dashboard():
     if current_user.is_admin:
         requests = Request.query.all()
-        return render_template('admin_dashboard.html', requests=requests)
+        problems_df = pd.DataFrame([
+            {'نوع المشكلة': req.problem_type, 'العدد': 1}
+            for req in requests
+        ])
+        problems_df = problems_df.groupby('نوع المشكلة').sum().reset_index()
+
+        fig = px.bar(problems_df, x='نوع المشكلة', y='العدد', title='توزيع انواع المشاكل')
+        graph_json = fig.to_json()
+        return render_template('admin_dashboard.html', requests=requests, graph_json=graph_json)
     else:
         requests = Request.query.filter_by(user_id=current_user.id).all()
         return render_template('user_dashboard.html', requests=requests)
@@ -107,7 +115,7 @@ def solve_request(request_id):
         return redirect(url_for('main.dashboard'))
     
     request = Request.query.get_or_404(request_id)
-    request.status = 'solved'
+    request.status = 'تمت المعالجة'
     db.session.commit()
     
     return redirect(url_for('main.dashboard'))
@@ -115,7 +123,7 @@ def solve_request(request_id):
 @main.route('/request/<int:request_id>/message', methods=['POST'])
 @login_required
 def add_message(request_id):
-    request = Request.query.get_or_404(request_id)
+    user_request = Request.query.get_or_404(request_id)
     content = request.form.get('content')
     
     if content:

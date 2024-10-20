@@ -2,15 +2,15 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="dashboard">
-    <h2>My Requests</h2>
-    <a href="{{ url_for('main.new_request') }}" class="button">New Request</a>
+    <h2>طلباتي</h2>
+    <a href="{{ url_for('main.new_request') }}" class="button">طلب جديد</a>
     
     <div class="requests-list">
         {% for request in requests %}
-        <div class="request-card">
-            <h3>{{ request.problem_type }} Issue</h3>
-            <p>Location: {{ request.location_type }} {{ request.location_number }}</p>
-            <p>Status: {{ request.status }}</p>
+        <div class="request-card {% if request.status == 'تمت المعالجة' %}solved{% endif %}">
+            <h3>{{ request.problem_type }} مشكلة</h3>
+            <p>موقع: {{ request.location_type }} {{ request.location_number }}</p>
+            <p>الحالة: {{ request.status }}</p>
             <p>{{ request.description }}</p
             <!-- templates/user_dashboard.html (continued) -->
             {% if request.image_path %}
@@ -18,7 +18,7 @@
             {% endif %}
             
             <div class="messages">
-                <h4>Messages</h4>
+                <h4>الرسائل</h4>
                 {% for message in request.messages %}
                 <div class="message {% if message.sender_id == current_user.id %}sent{% else %}received{% endif %}">
                     <p>{{ message.content }}</p>
@@ -27,8 +27,8 @@
                 {% endfor %}
                 
                 <form method="POST" action="{{ url_for('main.add_message', request_id=request.id) }}" class="message-form">
-                    <input type="text" name="content" placeholder="Type your message..." required>
-                    <button type="submit">Send</button>
+                    <input type="text" name="content" placeholder="اكتب رسالتك..." required>
+                    <button type="submit">ارسال</button>
                 </form>
             </div>
         </div>
